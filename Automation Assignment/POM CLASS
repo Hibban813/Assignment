@@ -1,0 +1,106 @@
+*** Settings ***
+Library     SeleniumLibrary
+Library    XML
+
+*** Variables ***
+
+
+*** Keywords ***
+Enter URL
+    Open Browser    blank:none     chrome
+    Sleep    1
+    Maximize Browser Window
+    Go To   https://ecs-qa.kloudship.com
+    Sleep    2500ms
+    Wait Until Page Contains    Login to your account
+    
+Enter Email Id and Password
+    [Arguments]     ${EmailId}   ${Password}
+    Input Text    xpath://div//input[@id="login-email"]    ${EmailId}
+    Sleep    1
+    Input Text    xpath://div//input[@id="login-password"]    ${Password}
+    Sleep    1
+
+Click on Login Button
+    Click Element    xpath://div//button[@type="submit"]
+    Sleep    1500ms
+
+Click on Packages from top header
+    Wait Until Page Contains    Kloudship QA automation
+    Sleep    3
+    Click Element    xpath://div[contains(@class,"row count")]//mat-card//span[text()="Packages"]
+    sleep  1500ms
+    
+Click on Add Package Button
+    Click Element    xpath://button[contains(@class,"button-disabled")]
+    Sleep    1
+
+
+Enter Name for new package
+    [Arguments]   ${Name}
+    Input Text    xpath://input[@formcontrolname="name"]   ${Name}
+    Sleep    1
+
+Enter Length value
+    ${randomLENGTH}    Evaluate    random.randint(1,19)
+    Input Text    xpath://input[@formcontrolname="length"]    ${randomLENGTH}
+    Sleep    1
+
+
+Enter Width value
+    ${randomWIDTH}    Evaluate    random.randint(1,19)
+    Input Text    xpath://input[@formcontrolname="width"]    ${randomWIDTH}
+    Sleep    1
+
+
+Enter Height value
+    ${randomHEIGHT}    Evaluate    random.randint(1,19)
+    Input Text    xpath://input[@formcontrolname="height"]    ${randomHEIGHT}
+    Sleep    1
+
+
+#--------Club : Add package details---------------
+Enter details for New Package
+    [Arguments]     ${Name}
+    Enter Name for new package    ${Name}
+    Enter Length value
+    Enter Width value
+    Enter Height value
+    
+Click on Save icon
+    Click Element    xpath://mat-icon[text()="check"]
+    Sleep    1
+    Wait Until Page Contains    New package type created
+    Sleep    2
+
+
+
+Click on 3 dot icon from top
+    Click Element    xpath://button[@aria-haspopup="menu"]
+    Sleep    1
+
+Click on Logout button
+    Click Element    xpath://button[contains(text(),"Logout")]
+    Sleep    2500ms
+    Wait Until Page Contains    Login to your account
+    Sleep    1
+
+#------------ Club: Log out --------------
+Log out of the system
+    Click on 3 dot icon from top
+    Click on Logout button
+
+
+Click on Delete icon to Delete the package
+    [Arguments]   ${Name}
+    Wait Until Page Contains    ${Name}
+    Mouse Over    xpath://div[contains(text(),"${Name}")]
+    Sleep    1
+    Click Element    xpath://div[contains(text(),"${Name}")]/..//mat-icon[text()="delete"]
+    Wait Until Page Contains    This will not affect any shipments
+    Sleep    2
+    Click Element    xpath://span[contains(text(),"Delete Package Type")]
+    Wait Until Page Contains    Hibban_Mansoor has been successfully deleted
+    Sleep    1
+
+
