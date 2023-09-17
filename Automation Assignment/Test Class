@@ -1,0 +1,41 @@
+*** Settings ***
+Library     SeleniumLibrary
+Resource    ../Resource/AssignmentPOM.robot
+
+*** Variables ***
+${EmailId}   kloudship.qa.automation@mailinator.com
+${Password}     Password1
+
+${Name}     Hibban_Mansoor
+
+
+
+*** Test Cases ***
+Enter URL
+    AssignmentPOM.Enter URL
+
+Enter Email Id, Password and click on Login Button
+    AssignmentPOM.Enter Email Id and Password     ${EmailId}   ${Password}
+    AssignmentPOM.Click on Login Button
+
+Click on Package and Add Package
+    AssignmentPOM.Click on Packages from top header
+    AssignmentPOM.Click on Add Package Button
+
+Enter Package Details and save it
+    AssignmentPOM.Enter details for New Package   ${Name}
+    AssignmentPOM.Click on Save icon
+
+Log Out from the Application
+    AssignmentPOM.Log out of the system
+
+Again Login into the Application
+    AssignmentPOM.Enter Email Id and Password     ${EmailId}   ${Password}
+    AssignmentPOM.Click on Login Button
+
+Click on Package and delete the added Package
+    AssignmentPOM.Click on Packages from top header
+    AssignmentPOM.Click on Delete icon to Delete the package   ${Name}
+
+Logout from the Application after deletion
+    AssignmentPOM.Log out of the system
